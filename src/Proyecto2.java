@@ -30,7 +30,7 @@ public class Proyecto2 extends JFrame implements ActionListener {
     private List<ImageButton> piezas = null;
     private JPanel tablero = null, botones = null, presentacion = null, juegoOps = null;
     private JLabel lbl_tiempo, lbl_intentos;
-    private ImageButton btnToMove;
+    private ImageButton btnToMove,btnRevolver;
     private Timer tiempo = new Timer(1000, new ActionListener() {
 
         @Override
@@ -243,13 +243,13 @@ public class Proyecto2 extends JFrame implements ActionListener {
         lbl_tiempo.setForeground(color1);
         tablero.add(lbl_tiempo);
 
-        titulo = new JLabel("<html><h2>Intentos</h2></html>");
-        titulo.setBounds(300, 20, 100, 30);
+        titulo = new JLabel("<html><h2>Movimientos</h2></html>");
+        titulo.setBounds(300, 20, 130, 30);
         titulo.setForeground(color3);
         tablero.add(titulo);
 
         lbl_intentos = new JLabel("<html><h1>" + intentos + "</h1></html>");
-        lbl_intentos.setBounds(400, 20, 160, 30);
+        lbl_intentos.setBounds(435, 20, 160, 30);
         lbl_intentos.setForeground(color1);
         tablero.add(lbl_intentos);
 
@@ -261,11 +261,11 @@ public class Proyecto2 extends JFrame implements ActionListener {
         btn.addActionListener(this);
         tablero.add(btn);
 
-        btn = new ImageButton("REVOLVER", color1, color3);
-        btn.setBounds(80, 490, 130, 40);
-        btn.setActionCommand("revolver");
-        btn.addActionListener(this);
-        tablero.add(btn);
+        btnRevolver = new ImageButton("REVOLVER", color1, color3);
+        btnRevolver.setBounds(80, 490, 130, 40);
+        btnRevolver.setActionCommand("revolver");
+        btnRevolver.addActionListener(this);
+        tablero.add(btnRevolver);
 
         add(tablero);
         repaint();
@@ -367,10 +367,11 @@ public class Proyecto2 extends JFrame implements ActionListener {
             remove(tablero);
             init();
         } else if (action.equalsIgnoreCase("pieza")) {
-
-            if (!tiempo.isRunning()) tiempo.start();
-
             if (isPlay) {
+                if (!tiempo.isRunning()){
+                    tiempo.start();
+                    btnRevolver.setEnabled(false);
+                }
                 if (!isMove) {
                     getDireccion(btn);
                     if (revisar())
@@ -469,7 +470,7 @@ public class Proyecto2 extends JFrame implements ActionListener {
         titulo.setForeground(color3);
         dialog.add(titulo);
 
-        titulo = new JLabel("<html><h1>Intentos: " + intentos + "</h1></html>");
+        titulo = new JLabel("<html><h1>Move.: " + intentos + "</h1></html>");
         titulo.setBounds(240, 310, 250, 40);
         titulo.setForeground(color3);
         dialog.add(titulo);
@@ -504,7 +505,7 @@ public class Proyecto2 extends JFrame implements ActionListener {
         dialog.add(btn);
 
         btn = new ImageButton("SALIR", color1, color3);
-        btn.setBounds(268, 410, 80, 40);
+        btn.setBounds(268, 410, 110, 40);
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
